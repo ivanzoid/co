@@ -12,7 +12,7 @@ func dlog(format string, args ...interface{}) {
 }
 
 func main() {
-	branchCmd := exec.Command("git rev-parse --abbrev-ref HEAD")
+	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
 	out, err := branchCmd.Output()
 	if err != nil {
 		dlog("Error: %v\n", err)
@@ -30,9 +30,9 @@ func main() {
 
 	message := strings.Join(os.Args[1:], " ")
 
-	commitCmdString := fmt.Sprintf("git commit -a \"%@%@\"", ticketPrefix, message)
+	commitCmdParamsString := fmt.Sprintf("commit -a \"%s%s\"", ticketPrefix, message)
 
-	fmt.Printf("%s", commitCmdString)
+	fmt.Printf("%s", commitCmdParamsString)
 
 	//commitCmd := exec.Command(commitCmdString)
 	//if err != nil {
