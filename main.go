@@ -20,6 +20,7 @@ func main() {
 	}
 
 	outStr := string(out)
+	outStr = strings.TrimSpace(outStr)
 	comps := strings.Split(outStr, "/")
 
 	ticketPrefix := ""
@@ -30,14 +31,21 @@ func main() {
 
 	message := strings.Join(os.Args[1:], " ")
 
-	commitCmdParamsString := fmt.Sprintf("commit -a \"%s%s\"", ticketPrefix, message)
+	var commitParams []string
 
-	fmt.Printf("%s", commitCmdParamsString)
+	commitParams = append(commitParams, "commit")
+	commitParams = append(commitParams, "-a")
 
-	//commitCmd := exec.Command(commitCmdString)
-	//if err != nil {
-	//	dlog("Error: %v\n", err)
-	//	return
-	//}
+	commitMessage := fmt.Sprintf("\"%s%s\"", ticketPrefix, message)
+	commitParams = append(commitParams, commitMessage)
 
+	fmt.Println(commitParams)
+
+	commitCmd := exec.Command("git", commitParams...)
+	out, err = commitCmd.Output()
+	if err != nil {
+		dlog("Error: %v\n", err)
+		dlog("Output: %v", string(out))
+		return
+	}
 }
