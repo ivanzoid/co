@@ -46,8 +46,10 @@ func main() {
 	}
 	commitParams = append(commitParams, "-m")
 
-	commitMessage := fmt.Sprintf("\"%s%s\"", ticketPrefix, message)
+	commitMessage := fmt.Sprintf("%s%s", ticketPrefix, message)
 	commitParams = append(commitParams, commitMessage)
+
+	fmt.Println(commitMessage)
 
 	commitCmd := exec.Command("git", commitParams...)
 	out, err = commitCmd.Output()
