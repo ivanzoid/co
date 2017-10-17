@@ -35,6 +35,7 @@ func main() {
 
 	commitParams = append(commitParams, "commit")
 	commitParams = append(commitParams, "-a")
+	commitParams = append(commitParams, "-m")
 
 	commitMessage := fmt.Sprintf("\"%s%s\"", ticketPrefix, message)
 	commitParams = append(commitParams, commitMessage)
@@ -42,6 +43,7 @@ func main() {
 	fmt.Println(commitParams)
 
 	commitCmd := exec.Command("git", commitParams...)
+	fmt.Println(commitCmd)
 	out, err = commitCmd.Output()
 	if err != nil {
 		dlog("Error: %v\n", err)
