@@ -33,7 +33,7 @@ func main() {
 	ticketPrefix := ""
 
 	if len(comps) >= 2 {
-		ticketPrefix = fmt.Sprintf("%s ", comps[len(comps)-1])
+		ticketPrefix = fmt.Sprintf("%s  ", comps[len(comps)-1])
 	}
 
 	message := strings.Join(args, " ")
