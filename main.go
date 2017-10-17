@@ -40,10 +40,7 @@ func main() {
 	commitMessage := fmt.Sprintf("\"%s%s\"", ticketPrefix, message)
 	commitParams = append(commitParams, commitMessage)
 
-	fmt.Println(commitParams)
-
 	commitCmd := exec.Command("git", commitParams...)
-	fmt.Println(commitCmd)
 	out, err = commitCmd.Output()
 	if err != nil {
 		dlog("Error: %v\n", err)
