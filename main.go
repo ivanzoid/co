@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -12,6 +13,12 @@ func dlog(format string, args ...interface{}) {
 }
 
 func main() {
+
+	noAdd := flag.Bool("na", false, "Do not pass -a to git.")
+	flag.Parse()
+
+	args := flag.Args()
+
 	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
 	out, err := branchCmd.Output()
 	if err != nil {
@@ -29,12 +36,14 @@ func main() {
 		ticketPrefix = fmt.Sprintf("%s ", comps[len(comps)-1])
 	}
 
-	message := strings.Join(os.Args[1:], " ")
+	message := strings.Join(args, " ")
 
 	var commitParams []string
 
 	commitParams = append(commitParams, "commit")
-	commitParams = append(commitParams, "-a")
+	if !*noAdd {
+		commitParams = append(commitParams, "-a")
+	}
 	commitParams = append(commitParams, "-m")
 
 	commitMessage := fmt.Sprintf("\"%s%s\"", ticketPrefix, message)
