@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
 	"os/exec"
@@ -12,7 +13,13 @@ func dlog(format string, args ...interface{}) {
 }
 
 func main() {
-	branchCmd := exec.Command("git rev-parse --abbrev-ref HEAD")
+
+	noAdd := flag.Bool("na", false, "Do not pass -a to git.")
+	flag.Parse()
+
+	args := flag.Args()
+
+	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
 	out, err := branchCmd.Output()
 	if err != nil {
 		dlog("Error: %v\n", err)
@@ -20,6 +27,7 @@ func main() {
 	}
 
 	outStr := string(out)
+	outStr = strings.TrimSpace(outStr)
 	comps := strings.Split(outStr, "/")
 
 	ticketPrefix := ""
@@ -28,16 +36,24 @@ func main() {
 		ticketPrefix = fmt.Sprintf("%s ", comps[len(comps)-1])
 	}
 
-	message := strings.Join(os.Args[1:], " ")
+	message := strings.Join(args, " ")
 
-	commitCmdString := fmt.Sprintf("git commit -a \"%@%@\"", ticketPrefix, message)
+	var commitParams []string
 
-	fmt.Printf("%s", commitCmdString)
+	commitParams = append(commitParams, "commit")
+	if !*noAdd {
+		commitParams = append(commitParams, "-a")
+	}
+	commitParams = append(commitParams, "-m")
 
-	//commitCmd := exec.Command(commitCmdString)
-	//if err != nil {
-	//	dlog("Error: %v\n", err)
-	//	return
-	//}
+	commitMessage := fmt.Sprintf("\"%s%s\"", ticketPrefix, message)
+	commitParams = append(commitParams, commitMessage)
 
+	commitCmd := exec.Command("git", commitParams...)
+	out, err = commitCmd.Output()
+	if err != nil {
+		dlog("Error: %v\n", err)
+		dlog("Output: %v", string(out))
+		return
+	}
 }
