@@ -32,8 +32,12 @@ func main() {
 
 	ticketPrefix := ""
 
-	if len(comps) >= 2 {
-		ticketPrefix = fmt.Sprintf("%s  ", comps[len(comps)-1])
+	if len(comps) >= 3 {
+		ticket := comps[len(comps)-1]
+		comps2 := strings.Split(ticket, "-")
+		if len(comps2) == 2 {
+			ticketPrefix = fmt.Sprintf("%s  ")
+		}
 	}
 
 	message := strings.Join(args, " ")
