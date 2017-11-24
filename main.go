@@ -36,7 +36,7 @@ func main() {
 		ticket := comps[len(comps)-1]
 		comps2 := strings.Split(ticket, "-")
 		if len(comps2) == 2 {
-			ticketPrefix = fmt.Sprintf("%s  ")
+			ticketPrefix = fmt.Sprintf("%s  ", ticket)
 		}
 	}
 
