@@ -28,7 +28,7 @@ func main() {
 
 	outStr := string(out)
 	outStr = strings.TrimSpace(outStr)
-	comps := strings.Split(outStr, "/")
+	comps := strings.Split(outStr, ".")
 
 	ticketPrefix := ""
 
