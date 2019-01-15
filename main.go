@@ -22,8 +22,7 @@ func main() {
 	branchCmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
 	out, err := branchCmd.Output()
 	if err != nil {
-		dlog("Error: %v\n", err)
-		return
+		dlog("Error getting current branch: %v\n", err)
 	}
 
 	outStr := string(out)
