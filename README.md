@@ -1,6 +1,6 @@
 # co
 
-Save your time by including ticket number in git commit message automatically.
+Save your time by including ticket number in git commit message automatically. For those who prefers to commit from terminal.
 
 # How to use
 
