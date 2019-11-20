@@ -17,5 +17,5 @@ $ `git -a commit -m "ID-42  Hello this is commit message"`
   
   This is regexp which tries to match ticket number from branch name. Feel free to change it to match your project's branch naming conventions.
 
-- `Note`: if your commit message contains some shell-interpretable symbols (like `$` or `#`), add single quotes:  
-$ `co 'Your commit message'`
+- Note: if your commit message contains some shell-interpretable symbols (like `$` or `#`), add single quotes:  
+$ `co 'Your commit message with $pecial $ymbols'`
