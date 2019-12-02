@@ -42,6 +42,9 @@ func main() {
 	}
 
 	ticketPrefix := ticketNumber(branchName)
+	if len(ticketPrefix) != 0 {
+		ticketPrefix = fmt.Sprintf("%s  ", ticketPrefix)
+	}
 
 	message := strings.Join(args, " ")
 
@@ -53,7 +56,7 @@ func main() {
 	}
 	commitParams = append(commitParams, "-m")
 
-	commitMessage := fmt.Sprintf("%s  %s", ticketPrefix, message)
+	commitMessage := fmt.Sprintf("%s%s", ticketPrefix, message)
 	commitParams = append(commitParams, commitMessage)
 
 	fmt.Println(commitMessage)
